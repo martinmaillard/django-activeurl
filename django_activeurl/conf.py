@@ -21,5 +21,8 @@ class ActiveUrlConf(AppConf):
         'menu': 'yes'
     }
 
+    # check url without GET parameters
+    WITHOUT_GET_PARAMS = True
+
     class Meta:
         prefix = 'active_url'

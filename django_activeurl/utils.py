@@ -54,6 +54,11 @@ def get_cache_key(content, css_class, parent_tag, full_path, menu):
 
 def check_active(url, element, full_path, css_class, menu):
     '''check "active" url, apply css_class'''
+
+    if settings.ACTIVE_URL_WITHOUT_GET_PARAMS:
+        # cut off GET params
+        full_path = re.sub(r'\?.+', '', full_path)
+
     # django > 1.5 template boolean\None variables feature
     if isinstance(menu, bool):
         if menu:
@@ -77,6 +82,9 @@ def check_active(url, element, full_path, css_class, menu):
         href = url.attrib['href'].strip()
         # cut off hashtag (anchor)
         href = re.sub(r'\#.+', '', href)
+        if settings.ACTIVE_URL_WITHOUT_GET_PARAMS:
+            # cut off GET params
+            href = re.sub(r'\?.+', '', href)
         # check empty href
         if href == '':
             # replace href with current location
